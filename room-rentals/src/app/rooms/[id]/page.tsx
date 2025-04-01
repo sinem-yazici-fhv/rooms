@@ -4,7 +4,6 @@ import { notFound } from "next/navigation"
 import RoomDetails from "./components/room-details"
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  // Await the entire params object
   const resolvedParams = await Promise.resolve(params)
   const id = resolvedParams.id
 
@@ -20,7 +19,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function RoomPage({ params }: { params: { id: string } }) {
-  // Await the entire params object
   const resolvedParams = await Promise.resolve(params)
   const id = resolvedParams.id
 

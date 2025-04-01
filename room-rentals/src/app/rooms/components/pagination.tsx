@@ -9,7 +9,6 @@ type PaginationProps = {
 export default function Pagination({currentPage, totalPages, sort} : PaginationProps	) {
     return (
         <div className="flex justify-center gap-4 mt-12">
-      {/* Only show Previous button if not on first page */}
       {currentPage > 1 ? (
         <Link
           href={`/rooms?page=${currentPage - 1}&sort=${sort}`}
@@ -18,7 +17,6 @@ export default function Pagination({currentPage, totalPages, sort} : PaginationP
           Previous
         </Link>
       ) : (
-        // Inactive element that doesn't accept clicks
         <span className="px-4 py-2 border rounded text-gray-400 cursor-not-allowed">Previous</span>
       )}
 
@@ -39,7 +37,6 @@ export default function Pagination({currentPage, totalPages, sort} : PaginationP
         })}
       </div>
 
-      {/* Only show Next button if not on last page */}
       {currentPage < totalPages ? (
         <Link
           href={`/rooms?page=${currentPage + 1}&sort=${sort}`}
@@ -48,7 +45,6 @@ export default function Pagination({currentPage, totalPages, sort} : PaginationP
           Next
         </Link>
       ) : (
-        // Inactive element that doesn't accept clicks
         <span className="px-4 py-2 border rounded text-gray-400 cursor-not-allowed">Next</span>
       )}
     </div>

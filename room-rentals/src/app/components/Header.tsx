@@ -1,4 +1,3 @@
-// app/components/Header.tsx
 import Link from "next/link"
 import { Me } from '@/types'
 import { API_URL } from '@/config'
@@ -11,12 +10,10 @@ export default async function Header() {
 
   return (
     <header className="flex items-center justify-between mb-16">
-    {/* Logo */}
     <div className="text-2xl font-bold">
       <Link href="/">Arrrbnb</Link>
     </div>
 
-    {/* Navigation Links */}
     <div className="flex items-center gap-4">
       <Link
         href="/rooms"
@@ -32,7 +29,6 @@ export default async function Header() {
       </Link>
     </div>
 
-    {/* User Profile */}
     <div className="flex items-center gap-2">
       <img
         src={data.portraitUrl}

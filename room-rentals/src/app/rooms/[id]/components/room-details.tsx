@@ -10,7 +10,6 @@ type RoomDetailsProps = {
 export default function RoomDetails({room}: RoomDetailsProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Left column - Image */}
           <div>
             <img
               src={room.heroUrl || "/placeholder.svg"}
@@ -19,7 +18,6 @@ export default function RoomDetails({room}: RoomDetailsProps) {
             />
           </div>
     
-          {/* Right column - Details */}
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold mb-2">{room.title}</h1>
     
