@@ -29,7 +29,8 @@ export default function RoomsPage() {
     async function fetchRooms() {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/rooms?page=${pageIndex}&size=${pageSize}&sort=${encodeURIComponent(sort)}`);
+        const response = await fetch(`${API_URL}/rooms?page=${pageIndex}&size=${pageSize}&sort=${sort}`);
+
         if (!response.ok) throw new Error("Failed to fetch rooms");
         const result = await response.json();
         setData(result);

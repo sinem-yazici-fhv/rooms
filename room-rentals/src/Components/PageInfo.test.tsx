@@ -1,9 +1,9 @@
-import { it, describe, expect} from 'vitest';
+import { it, describe, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Pagination from './Pagination';
 
 describe('Pagination', () => {
-  it('shows page info', () => {
+  it('zeigt Seiteninformationen an', () => {
     render(
       <Pagination
         page={{
@@ -16,10 +16,10 @@ describe('Pagination', () => {
       />
     );
     
-    screen.getByText('Page 1 of 3 (20 results in total)');
+    expect(screen.getByText('Page 1 of 3 (20 results in total)')).toBeDefined();
   });
 
-  it('has working previous and next buttons', () => {
+  it('zeigt aktive Previous/Next Links an', () => {
     render(
       <Pagination
         page={{
@@ -32,11 +32,11 @@ describe('Pagination', () => {
       />
     );
     
-    screen.getByText('Previous');
-    screen.getByText('Next');
+    expect(screen.getByTestId('previous-link')).toBeDefined();
+    expect(screen.getByTestId('next-link')).toBeDefined();
   });
 
-  it('disables previous on first page', () => {
+  it('deaktiviert Previous auf der ersten Seite', () => {
     render(
       <Pagination
         page={{
@@ -49,7 +49,7 @@ describe('Pagination', () => {
       />
     );
     
-    const prev = screen.getByText('Previous');
-    expect(prev).not.toHaveAttribute('href');
+    expect(screen.getByTestId('previous-disabled')).toBeDefined();
+    expect(screen.getByTestId('previous-disabled')).toHaveProperty('style.color', 'gray');
   });
 });
