@@ -1,7 +1,6 @@
 import type {Room} from  "@/types"
-import Link from "next/link"
-import Header from "@/app/components/Header"
 import formatDate from "@/utils/formatDate"
+
 
 
 type RoomDetailsProps = {
@@ -29,7 +28,7 @@ export default function RoomDetails({room}: RoomDetailsProps) {
             <div className="text-gray-500 mb-6">Added on {formatDate(room.createdAt)}</div>
     
             <div className="flex items-center gap-2">
-              <img 
+              <img
                 src={room.owner.portraitUrl} 
                 className="rounded-full w-8 h-8 object-cover"
                 alt="Owner"

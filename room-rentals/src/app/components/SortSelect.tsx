@@ -1,22 +1,37 @@
-'use client'
+"use client"
+import { useRouter, useSearchParams } from "next/navigation"
 
-import { useRouter } from 'next/navigation'
+interface SortSelectProps {
+  currentSort: string
+}
 
-export default function SortSelect({ currentSort }: { currentSort: string }) {
+export default function SortSelect({ currentSort }: SortSelectProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSort = e.target.value
+    const params = new URLSearchParams(searchParams.toString())
+    
+    params.set('sort', newSort)
+    params.set('page', '1') 
+    router.push(`/rooms?${params.toString()}`, { scroll: false })
+  }
 
   return (
-    <select
-      value={currentSort}
-      onChange={(e) => {
-        console.log("Selected sort:" , e.target.value)
-        router.push(`/rooms?sort=${e.target.value}&page=1`)
-      }}
-      className="p-2 border rounded text-sm"
-    >
-      <option value="createdAt,desc">Newest</option> {/* Hier desc hinzugefügt */}
-      <option value="pricePerNight.amount,asc">Price (low to high)</option>
-      <option value="pricePerNight.amount,desc">Price (high to low)</option>
-    </select>
+    <div className="flex items-center gap-2">
+      <label htmlFor="sort-select" className="text-sm text-gray-600">
+        Sort by:
+      </label>
+      <select
+        id="sort-select"
+        value={currentSort}
+        onChange={handleSortChange}
+        className="px-3 py-1 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="createdAt">Newest first</option>
+        <option value="pricePerNight">Price (low to high)</option>
+      </select>
+    </div>
   )
 }

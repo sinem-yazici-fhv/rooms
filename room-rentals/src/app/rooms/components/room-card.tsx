@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Room } from "@/types"
 import formatDate from "@/utils/formatDate"
 
+
 type RoomCardProps = {
   room: Room
 }
@@ -36,7 +37,7 @@ export default function RoomCard({ room }: RoomCardProps) {
             </div>
 
             <div className="flex items-center gap-2">
-              <img 
+              <img
                 src={room.owner.portraitUrl} 
                 className="rounded-full w-8 h-8 object-cover"
                 alt="Owner"

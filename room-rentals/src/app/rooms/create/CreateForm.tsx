@@ -4,9 +4,15 @@ import { useFormStatus } from "react-dom"
 import { useActionState, useState } from "react"
 import { redirect } from "next/navigation"
 
-type Props = {
-  submit: (prevState: any, formData: FormData) => Promise<any>
+interface FormState {
+  error?: string;
+  success?: boolean;
+  redirectTo?: string;
 }
+
+type Props = {
+  submit: (prevState: FormState | null, formData: FormData) => Promise<FormState>;
+};
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -26,8 +32,7 @@ export default function CreateForm({ submit }: Props) {
   const [state, formAction] = useActionState(submit, null)
   const [price, setPrice] = useState("95")
   const { pending } = useFormStatus()
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   function validateField(name: string, value: string) {
     if (!value) {

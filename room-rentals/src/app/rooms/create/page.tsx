@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import CreateForm from "./CreateForm"
 import type { Metadata } from "next"
@@ -8,8 +7,26 @@ export const metadata: Metadata = {
   description: "Add a new cabin to Arrrbnb",
 }
 
+interface FormState {
+  error?: string
+  success?: boolean
+  redirectTo?: string
+}
+
+interface PricePerNight {
+  amount: number
+  currency: string
+}
+
+interface RoomData {
+  title: string
+  description: string
+  heroUrl: string
+  pricePerNight: PricePerNight
+}
+
 export default function CreatePage() {
-  async function submit(prevState: any, formData: FormData) {
+  async function submit(prevState: FormState | null, formData: FormData): Promise<FormState> {
     "use server"
 
     const title = formData.get("title") as string
@@ -26,20 +43,22 @@ export default function CreatePage() {
     }
 
     try {
+      const roomData: RoomData = {
+        title,
+        description,
+        heroUrl,
+        pricePerNight: {
+          amount: Number.parseFloat(pricePerNightAmount),
+          currency: "USD",
+        },
+      }
+
       const response = await fetch("http://localhost:3001/rooms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          title,
-          description,
-          heroUrl,
-          pricePerNight: {
-            amount: Number.parseFloat(pricePerNightAmount),
-            currency: "USD",
-          },
-        }),
+        body: JSON.stringify(roomData),
       })
 
       if (!response.ok) {
@@ -53,8 +72,9 @@ export default function CreatePage() {
       }
 
       return { success: true }
-    } catch (error) {
-      return { error: "An unexpected error occurred" }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred"
+      return { error: errorMessage }
     }
   }
 
@@ -67,3 +87,4 @@ export default function CreatePage() {
     </div>
   )
 }
+
